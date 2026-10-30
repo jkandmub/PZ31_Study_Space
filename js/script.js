@@ -32,15 +32,15 @@ function getCookie(key) {
 
 // 3. Восстанавливаем данные при открытии страницы
 // TODO 1. Вместо null получите заметку из localStorage по ключу "pz31-note".
-const savedNote = null;
-if (savedNote !== null) {
+const savedNote = localStorage.getItem("pz31-note");
+if (savedNote !== localStorage.getItem("pz31-note")) {
   noteInput.value = savedNote;
   noteStatus.textContent = "Заметка восстановлена из localStorage.";
 }
 
 // TODO 2. Вместо пустой строки получите cookie с именем "pz31-name".
-const savedName = "";
-if (savedName !== "") {
+const savedName = getCookie("pz31-name");
+if (savedName !== getCookie("pz31-name")) {
   nameInput.value = savedName;
   greeting.textContent = `Привет, ${savedName}!`;
   nameStatus.textContent = "Имя восстановлено из cookie.";
@@ -56,12 +56,13 @@ saveNoteButton.addEventListener("click", () => {
   }
 
   // TODO 3. Сохраните note в localStorage с ключом "pz31-note".
-
+  localStorage.setItem("pz31-note", note);
   noteStatus.textContent = "Заметка сохранена в браузере.";
 });
 
 // 5. Удаляем заметку
 clearNoteButton.addEventListener("click", () => {
+  localStorage.removeItem("pz31-note");
   // TODO 4. Удалите из localStorage значение по ключу "pz31-note".
 
   noteInput.value = "";
@@ -77,6 +78,7 @@ saveNameButton.addEventListener("click", () => {
     return;
   }
 
+  setCookie("pz31-name", name, 7);
   // TODO 5. Сохраните имя через setCookie("pz31-name", name, 7).
 
   greeting.textContent = `Привет, ${name}!`;
